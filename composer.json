@@ -1,0 +1,20 @@
+{
+  "name": "bluenest/blue-nest-functions",
+  "description": "Blue nest common functions.",
+  "version": "1.0",
+  "authors": [
+    {
+      "name": "Bryan",
+      "email": "bryan@bluenestdigital.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "files": [
+      "src/functions/BlueNest.php"
+    ],
+    "classmap": [
+      "src/classes/"
+    ]
+  }
+}
