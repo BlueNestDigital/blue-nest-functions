@@ -10,8 +10,15 @@ class ReportingEventListener implements RoostEventListenerIface
 {
 	/** @var ReportingEvent[] */
 	private $eventsToReport = [];
+	private $emailsToNotify = [];
+	private $emailSubject = "Script report generated";
 
-	function __construct() {
+	function __construct($notificationEmails, $emailSubject = null) {
+		$this->emailsToNotify = $notificationEmails;
+
+		if($emailSubject !== null) {
+			$this->emailSubject = $emailSubject;
+		}
 	}
 
 	function isInterestedInEvent($event) {
@@ -27,6 +34,8 @@ class ReportingEventListener implements RoostEventListenerIface
 		$reportGenerator = new ReportGenerator();
 		$reportContent = $reportGenerator->generateReport($this->eventsToReport);
 
-		assert(sendHtmlMail("bryan@bluenestdigital.com", "Script report generated", $reportContent, true));
+		foreach($this->emailsToNotify as $email) {
+			assert(sendHtmlMail($email, $this->emailSubject, $reportContent, true));
+		}
 	}
 }
