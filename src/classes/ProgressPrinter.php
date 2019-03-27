@@ -31,7 +31,13 @@ class ProgressPrinter {
                 $labelText = $this->label;
                 if(is_array($replacementValuesArray)) {
                     foreach($replacementValuesArray as $replacementValue) {
-                        $labelText = str_replace_first("{}", $replacementValue, $labelText);
+                        $position = strpos($labelText, "{}");
+
+                        if($position === false) {
+                            throw new Exception("Invalid replacement count: #" . $i . " for string " . $labelText);
+                        }
+
+                        $labelText = substr_replace($labelText, $replacementValue, $position, strlen("{}"));
                     }
                 }
                 $output = $output . ": " . $labelText;
